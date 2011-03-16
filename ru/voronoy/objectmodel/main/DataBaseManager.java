@@ -1,15 +1,27 @@
 package ru.voronoy.objectmodel.main;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class DataBaseManager {
 
-	public void CreateDataBase(DbProperties testDbProperties) {
+	private List<String> dataBases;
+	
+	public DataBaseManager(){
+		dataBases = new LinkedList<String>();
+	}
+	
+	public void CreateDataBase(DbProperties properties) {
 		// TODO Auto-generated method stub
-		
+		dataBases.add(properties.getDataBaseName());
 	}
 
-	public boolean FoundDataBase(String string) {
+	public boolean FoundDataBase(String dbName) {
 		// TODO correct implementation
-		return true;
+		if (dataBases.contains(dbName)){
+			return true;
+		}
+		return false;
 	}
 
 }
