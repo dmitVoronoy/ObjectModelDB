@@ -1,13 +1,13 @@
 package ru.voronoy.objectmodel.test;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import ru.voronoy.objectmodel.main.DataBaseManager;
 import ru.voronoy.objectmodel.main.DbProperties;
-import ru.voronoy.objectmodel.main.Table;
-
+import ru.voronoy.objectmodel.main.Mapper;
 
 public class ObjectModelTest {
 
@@ -15,15 +15,21 @@ public class ObjectModelTest {
 	DbProperties testDbProperties = new DbProperties();
 	
 	@Test
-	public void testFirst(){
-		Table table = new Table();
-		assertNotNull(table);
+	public void testCreateDataBase(){
+		testDbProperties.setDataBaseName("testDataBase");
+		dbManager.createDataBase(testDbProperties);
+		assertTrue(dbManager.foundDataBase("testDataBase"));
 	}
 	
 	@Test
-	public void testCreateDataBase(){
-		testDbProperties.SetDataBaseName("testDataBase");
-		dbManager.CreateDataBase(testDbProperties);
-		assertTrue(dbManager.FoundDataBase("testDataBase"));
+	public void testSimpleObjectMapping(){
+		TestObject test = new TestObject();
+		test.setID(1);
+		Mapper m = new Mapper();
+		m.save(test);
+		assertEquals(m.getTablesCount(),1);
 	}
+	
+	
+	
 }

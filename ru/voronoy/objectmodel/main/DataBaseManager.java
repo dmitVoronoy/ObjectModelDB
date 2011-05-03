@@ -11,12 +11,12 @@ public class DataBaseManager {
 		dataBases = new LinkedList<String>();
 	}
 	
-	public void CreateDataBase(DbProperties properties) {
+	public void createDataBase(DbProperties properties) {
 		// TODO Auto-generated method stub
 		dataBases.add(properties.getDataBaseName());
 	}
 
-	public boolean FoundDataBase(String dbName) {
+	public boolean foundDataBase(String dbName) {
 		// TODO correct implementation
 		if (dataBases.contains(dbName)){
 			return true;

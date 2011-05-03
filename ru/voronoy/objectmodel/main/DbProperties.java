@@ -4,7 +4,7 @@ public class DbProperties {
 
 	private String dataBaseName;
 	
-	public void SetDataBaseName(String dbName) {
+	public void setDataBaseName(String dbName) {
 		// TODO Auto-generated method stub
 		this.dataBaseName = dbName;
 	}
