@@ -28,8 +28,7 @@ public class ObjectModelTest {
 		Mapper m = new Mapper();
 		m.save(test);
 		assertEquals(m.getTablesCount(),1);
-	}
-	
+	}		
 	
 	
 }
