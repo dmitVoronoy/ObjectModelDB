@@ -1,10 +1,9 @@
 package ru.voronoy.objectmodel.main;
 
-public class Field {
-	private String name;
-	
+public class Field extends DataBaseObject {
+		
 	public Field(String name){
-		this.name = name;
+		super(name);
 	}
 		
 }

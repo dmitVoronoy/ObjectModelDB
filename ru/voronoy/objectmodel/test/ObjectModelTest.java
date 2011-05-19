@@ -2,18 +2,31 @@ package ru.voronoy.objectmodel.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import ru.voronoy.objectmodel.main.DataBaseManager;
 import ru.voronoy.objectmodel.main.DbProperties;
 import ru.voronoy.objectmodel.main.Field;
 import ru.voronoy.objectmodel.main.Table;
+import ru.voronoy.objectmodel.main.View;
 
 public class ObjectModelTest {
 
 	DataBaseManager dbManager = new DataBaseManager();
 	DbProperties testDbProperties = new DbProperties();
+	Table testTable;
+	Field testField;
+	Index testIndex;
+	
+	@Before
+	public void setUp(){
+		testTable = new Table("testTable");
+		testField = new Field("testField");
+		testIndex = new Index("testIndex");
+	}
 	
 	@Test
 	public void testCreateDataBase(){
@@ -24,17 +37,41 @@ public class ObjectModelTest {
 	
 	@Test
 	public void testCreateTable(){
-		Table t = new Table("testTable");
-		assertEquals(t.getName(), "testTable");
+		assertEquals(testTable.getName(), "testTable");
 	}
 	
 	@Test
 	public void testGetTableFieldsCount(){
-		Table t = new Table("testTable");
-		Field f = new Field("testField");
-		t.addField(f);
-		assertEquals(t.getFieldsCount(),1);
+		testTable.addField(testField);
+		assertEquals(testTable.getFieldsCount(),1);
 	}
 	
+	@Test
+	public void testCreateView(){
+		View v = new View("testView");
+		assertEquals(v.getName(),"testView");
+	}
+	
+	@Test
+	public void testCreateIndex(){		
+		assertEquals(testIndex.getName(), "testIndex");
+	}
+	
+	@Test 
+	public void testAddIndexToTable(){
+		testTable.addIndex(testIndex);
+		assertEquals(testTable.getIndexCount(),1);
+	}
+	
+	@Test
+	public void testCreateConstraint(){
+		Constraint testConstraint = new Constraint("testConstraint");
+		assertEquals(testConstraint.getName(), "testConstraint");
+	}
+	
+	@Test
+	public void testAddConstraintToField(){
+		fail();
+	}
 	
 }

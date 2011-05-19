@@ -2,17 +2,16 @@ package ru.voronoy.objectmodel.main;
 
 import java.util.ArrayList;
 
+import ru.voronoy.objectmodel.test.Index;
 
-public class Table {
-	private String name;
-	private ArrayList<Field> fields = new ArrayList<Field>();
+
+public class Table extends DataBaseObject {
 	
-	public Table(String name) {
-		this.name = name;
-	}
-
-	public String getName() {
-		return this.name;
+	private ArrayList<Field> fields = new ArrayList<Field>();
+	private ArrayList<Index> indexes = new ArrayList<Index>();
+	
+	public Table(String name){
+		super(name);
 	}
 
 	public void addField(Field f) {
@@ -22,6 +21,15 @@ public class Table {
 
 	public int getFieldsCount() {
 		return this.fields.size();
+	}
+
+	public void addIndex(Index i) {
+		this.indexes .add(i);
+		
+	}
+
+	public Object getIndexCount() {
+		return this.indexes.size();
 	}
 
 }
