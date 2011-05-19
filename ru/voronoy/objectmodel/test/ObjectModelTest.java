@@ -1,13 +1,14 @@
 package ru.voronoy.objectmodel.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import ru.voronoy.objectmodel.main.DataBaseManager;
 import ru.voronoy.objectmodel.main.DbProperties;
-import ru.voronoy.objectmodel.main.Mapper;
+import ru.voronoy.objectmodel.main.Field;
+import ru.voronoy.objectmodel.main.Table;
 
 public class ObjectModelTest {
 
@@ -22,13 +23,18 @@ public class ObjectModelTest {
 	}
 	
 	@Test
-	public void testSimpleObjectMapping(){
-		TestObject test = new TestObject();
-		test.setID(1);
-		Mapper m = new Mapper();
-		m.save(test);
-		assertEquals(m.getTablesCount(),1);
-	}		
+	public void testCreateTable(){
+		Table t = new Table("testTable");
+		assertEquals(t.getName(), "testTable");
+	}
+	
+	@Test
+	public void testGetTableFieldsCount(){
+		Table t = new Table("testTable");
+		Field f = new Field("testField");
+		t.addField(f);
+		assertEquals(t.getFieldsCount(),1);
+	}
 	
 	
 }
