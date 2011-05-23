@@ -21,14 +21,16 @@ public class ObjectModelTest {
 	Table testTable;
 	Field testField;
 	Index testIndex;
-	Constraint testConstraint;
+	Constraint testPKconstraint;
+	Constraint testFKconstraint;
 	
 	@Before
 	public void setUp(){
 		testTable = new Table("testTable");
 		testField = new Field("testField");
 		testIndex = new Index("testIndex");
-		testConstraint = new Constraint("testConstraint");
+		testPKconstraint = new PrimaryKeyConstraint("testPK");
+		testFKconstraint = new ForeignKeyConstraint("testFK");
 	}
 	
 	@Test
@@ -67,37 +69,24 @@ public class ObjectModelTest {
 	}
 	
 	@Test
-	public void testCreateConstraint(){
-		assertEquals(testConstraint.getName(), "testConstraint");
-	}
-	
-	@Test
-	public void testAddConstraintToField(){
-		testField.addConstraint(testConstraint);
-		assertTrue(testField.containsConstraint(testConstraint));
-	}
-	
-	@Test
 	public void testCreatePimaryKeyConstraint(){
-		Constraint testPKconstraint = new PrimaryKeyConstraint("testPK");
 		testField.addConstraint(testPKconstraint);
 		assertTrue(testField.containsConstraint(testPKconstraint));
 	}
 	
 	@Test
 	public void testCreateForegnKeyConstraint(){
-		Constraint testFKconstraint = new ForeignKeyConstraint("testFK");
 		testField.addConstraint(testFKconstraint);
 		assertTrue(testField.containsConstraint(testFKconstraint));
 	}
 	
 	@Test
-	public void testContainsConstraint(){
-		Constraint testPKconstraint = new PrimaryKeyConstraint("testPK");
-		Constraint testFKconstraint = new ForeignKeyConstraint("testFK");
+	public void testContainsConstraint(){		
 		testField.addConstraint(testPKconstraint);
 		assertFalse(testField.containsConstraint(testFKconstraint));
 		assertTrue(testField.containsConstraint(testPKconstraint));
 	}
+	
+	
 	
 }
