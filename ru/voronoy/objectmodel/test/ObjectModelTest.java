@@ -35,9 +35,9 @@ public class ObjectModelTest {
 		testTable = new Table("testTable");
 		testField = new Field("testField");
 		testIndex = new Index("testIndex");
-		testPKconstraint = new PrimaryKeyConstraint("testPK");
-		testFKconstraint = new ForeignKeyConstraint("testFK");
-		testNotNullConstraint = new NotNullConstraint("testNN");
+		testPKconstraint = new PrimaryKeyConstraint();
+		testFKconstraint = new ForeignKeyConstraint();
+		testNotNullConstraint = new NotNullConstraint();
 	}
 	
 	@Test
@@ -117,6 +117,13 @@ public class ObjectModelTest {
 	public void testContainsNotNullIfFK(){
 		testField.addConstraint(testFKconstraint);
 		assertTrue(testField.containsConstraint(testNotNullConstraint));
+	}
+	
+	@Test
+	public void testCreateCheckConstraint(){
+		Constraint testCheckConstraint = new CheckConstraint();
+		testField.addConstraint(testCheckConstraint);
+		assertTrue(testField.containsConstraint(testCheckConstraint));
 	}
 	
 }

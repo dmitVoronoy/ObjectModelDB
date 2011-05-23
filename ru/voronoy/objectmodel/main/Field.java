@@ -17,7 +17,7 @@ public class Field extends DataBaseObject {
 			this.constraints.add(constraint);			
 		}			
 		if (constraint instanceof KeyConstraint){
-			this.constraints.add(new NotNullConstraint("nn"));
+			this.constraints.add(new NotNullConstraint());
 		}
 	}
 

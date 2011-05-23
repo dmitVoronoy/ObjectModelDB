@@ -4,6 +4,10 @@ public abstract class DataBaseObject {
 	
 	private String name;
 	
+	protected DataBaseObject(){
+		this.name = "";
+	}
+	
 	protected DataBaseObject(String name) {
 		this.name = name;
 	}
