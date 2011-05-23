@@ -20,12 +20,14 @@ public class ObjectModelTest {
 	Table testTable;
 	Field testField;
 	Index testIndex;
+	Constraint testConstraint;
 	
 	@Before
 	public void setUp(){
 		testTable = new Table("testTable");
 		testField = new Field("testField");
 		testIndex = new Index("testIndex");
+		testConstraint = new Constraint("testConstraint");
 	}
 	
 	@Test
@@ -65,13 +67,20 @@ public class ObjectModelTest {
 	
 	@Test
 	public void testCreateConstraint(){
-		Constraint testConstraint = new Constraint("testConstraint");
 		assertEquals(testConstraint.getName(), "testConstraint");
 	}
 	
 	@Test
 	public void testAddConstraintToField(){
-		fail();
+		testField.addConstraint(testConstraint);
+		assertTrue(testField.containsConstraint(testConstraint));
+	}
+	
+	@Test
+	public void testCreatePimaryKeyConstraint(){
+		Constraint testPKconstraint = new PrimaryKeyConstraint("testPK");
+		testField.addConstraint(testPKconstraint);
+		assertTrue(testField.containsConstraint(testPKconstraint));
 	}
 	
 }
