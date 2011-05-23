@@ -1,5 +1,6 @@
 package ru.voronoy.objectmodel.test;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -80,6 +81,22 @@ public class ObjectModelTest {
 	public void testCreatePimaryKeyConstraint(){
 		Constraint testPKconstraint = new PrimaryKeyConstraint("testPK");
 		testField.addConstraint(testPKconstraint);
+		assertTrue(testField.containsConstraint(testPKconstraint));
+	}
+	
+	@Test
+	public void testCreateForegnKeyConstraint(){
+		Constraint testFKconstraint = new ForeignKeyConstraint("testFK");
+		testField.addConstraint(testFKconstraint);
+		assertTrue(testField.containsConstraint(testFKconstraint));
+	}
+	
+	@Test
+	public void testContainsConstraint(){
+		Constraint testPKconstraint = new PrimaryKeyConstraint("testPK");
+		Constraint testFKconstraint = new ForeignKeyConstraint("testFK");
+		testField.addConstraint(testPKconstraint);
+		assertFalse(testField.containsConstraint(testFKconstraint));
 		assertTrue(testField.containsConstraint(testPKconstraint));
 	}
 	
