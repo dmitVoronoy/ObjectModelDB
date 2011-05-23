@@ -1,6 +1,6 @@
 package ru.voronoy.objectmodel.main;
 
-public class DataBaseObject {
+public abstract class DataBaseObject {
 	
 	private String name;
 	

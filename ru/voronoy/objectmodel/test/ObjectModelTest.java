@@ -8,9 +8,14 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
+import ru.voronoy.objectmodel.main.Constraint;
 import ru.voronoy.objectmodel.main.DataBaseManager;
 import ru.voronoy.objectmodel.main.DbProperties;
 import ru.voronoy.objectmodel.main.Field;
+import ru.voronoy.objectmodel.main.ForeignKeyConstraint;
+import ru.voronoy.objectmodel.main.Index;
+import ru.voronoy.objectmodel.main.NotNullConstraint;
+import ru.voronoy.objectmodel.main.PrimaryKeyConstraint;
 import ru.voronoy.objectmodel.main.Table;
 import ru.voronoy.objectmodel.main.View;
 
@@ -23,6 +28,7 @@ public class ObjectModelTest {
 	Index testIndex;
 	Constraint testPKconstraint;
 	Constraint testFKconstraint;
+	Constraint testNotNullConstraint;
 	
 	@Before
 	public void setUp(){
@@ -31,6 +37,7 @@ public class ObjectModelTest {
 		testIndex = new Index("testIndex");
 		testPKconstraint = new PrimaryKeyConstraint("testPK");
 		testFKconstraint = new ForeignKeyConstraint("testFK");
+		testNotNullConstraint = new NotNullConstraint("testNN");
 	}
 	
 	@Test
@@ -87,6 +94,29 @@ public class ObjectModelTest {
 		assertTrue(testField.containsConstraint(testPKconstraint));
 	}
 	
+	@Test
+	public void testAddFKifFieldHasPKyet(){
+		testField.addConstraint(testPKconstraint);
+		testField.addConstraint(testFKconstraint);
+		assertFalse(testField.containsConstraint(testFKconstraint));
+	}
 	
+	@Test
+	public void testCreateNotNullConstraint(){		
+		testField.addConstraint(testNotNullConstraint);
+		assertTrue(testField.containsConstraint(testNotNullConstraint));
+	}
+	
+	@Test
+	public void testContainsNotNullIfPK(){
+		testField.addConstraint(testPKconstraint);
+		assertTrue(testField.containsConstraint(testNotNullConstraint));
+	}
+	
+	@Test
+	public void testContainsNotNullIfFK(){
+		testField.addConstraint(testFKconstraint);
+		assertTrue(testField.containsConstraint(testNotNullConstraint));
+	}
 	
 }

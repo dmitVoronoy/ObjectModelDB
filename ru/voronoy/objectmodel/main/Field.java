@@ -2,7 +2,6 @@ package ru.voronoy.objectmodel.main;
 
 import java.util.ArrayList;
 
-import ru.voronoy.objectmodel.test.Constraint;
 
 public class Field extends DataBaseObject {
 		
@@ -13,14 +12,18 @@ public class Field extends DataBaseObject {
 		this.constraints = new ArrayList<Constraint>();
 	}
 
-	public void addConstraint(Constraint testConstraint) {
-		this.constraints.add(testConstraint);
-		
+	public void addConstraint(Constraint constraint) {
+		if (this.constraints.isEmpty()){
+			this.constraints.add(constraint);			
+		}			
+		if (constraint instanceof KeyConstraint){
+			this.constraints.add(new NotNullConstraint("nn"));
+		}
 	}
 
-	public boolean containsConstraint(Constraint testPKconstraint) {
+	public boolean containsConstraint(Constraint constraint) {
 		for (Constraint c : this.constraints){
-			if (c.getClass().isInstance(testPKconstraint)){
+			if (c.getClass().isInstance(constraint)){
 				return true;
 			}
 		}

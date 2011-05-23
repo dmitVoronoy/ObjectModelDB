@@ -1,6 +1,6 @@
-package ru.voronoy.objectmodel.test;
+package ru.voronoy.objectmodel.main;
 
-public class ForeignKeyConstraint extends Constraint {
+public class ForeignKeyConstraint extends KeyConstraint{
 
 	public ForeignKeyConstraint(String name) {
 		super(name);

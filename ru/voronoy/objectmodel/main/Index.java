@@ -1,6 +1,5 @@
-package ru.voronoy.objectmodel.test;
+package ru.voronoy.objectmodel.main;
 
-import ru.voronoy.objectmodel.main.DataBaseObject;
 
 public class Index extends DataBaseObject {
 	

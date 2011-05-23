@@ -2,7 +2,6 @@ package ru.voronoy.objectmodel.main;
 
 import java.util.ArrayList;
 
-import ru.voronoy.objectmodel.test.Index;
 
 
 public class Table extends DataBaseObject {
