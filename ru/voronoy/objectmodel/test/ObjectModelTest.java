@@ -32,9 +32,9 @@ public class ObjectModelTest {
 	ForeignKeyConstraint testFKconstraint;
 	Constraint testNotNullConstraint;
 	Constraint testUniqueConstraint;
-	
+
 	@Before
-	public void setUp(){
+	public void setUp() {
 		testUniqueConstraint = new UniqueConstraint();
 		testTable = new Table("testTable");
 		testField = new Field("testField");
@@ -43,112 +43,108 @@ public class ObjectModelTest {
 		testFKconstraint = new ForeignKeyConstraint();
 		testNotNullConstraint = new NotNullConstraint();
 	}
-	
+
 	@Test
-	public void testCreateDataBase(){
+	public void testCreateDataBase() {
 		testDbProperties.setDataBaseName("testDataBase");
 		dbManager.createDataBase(testDbProperties);
 		assertTrue(dbManager.foundDataBase("testDataBase"));
 	}
-	
+
 	@Test
-	public void testCreateTable(){
+	public void testCreateTable() {
 		assertEquals(testTable.getName(), "testTable");
 	}
-	
+
 	@Test
-	public void testGetTableFieldsCount(){
+	public void testGetTableFieldsCount() {
 		testTable.addField(testField);
-		assertEquals(testTable.getFieldsCount(),1);
+		assertEquals(testTable.getFieldsCount(), 1);
 	}
-	
+
 	@Test
-	public void testCreateView(){
+	public void testCreateView() {
 		View v = new View("testView");
-		assertEquals(v.getName(),"testView");
+		assertEquals(v.getName(), "testView");
 	}
-	
+
 	@Test
-	public void testCreateIndex(){		
+	public void testCreateIndex() {
 		assertEquals(testIndex.getName(), "testIndex");
 	}
-	
-	@Test 
-	public void testAddIndexToTable(){
+
+	@Test
+	public void testAddIndexToTable() {
 		testTable.addIndex(testIndex);
-		assertEquals(testTable.getIndexCount(),1);
+		assertEquals(testTable.getIndexCount(), 1);
 	}
-	
+
 	@Test
-	public void testCreatePimaryKeyConstraint(){
+	public void testContainsPKconstraint() {
 		testField.addConstraint(testPKconstraint);
-		assertTrue(testField.containsConstraint(testPKconstraint));
+		assertFalse(testField.isForeignKey());
+		assertTrue(testField.isPrimaryKey());
 	}
-	
+
 	@Test
-	public void testCreateForegnKeyConstraint(){
-		testField.addConstraint(testFKconstraint);
-		assertTrue(testField.containsConstraint(testFKconstraint));
-	}
-	
-	@Test
-	public void testContainsConstraint(){		
-		testField.addConstraint(testPKconstraint);
-		assertFalse(testField.containsConstraint(testFKconstraint));
-		assertTrue(testField.containsConstraint(testPKconstraint));
-	}
-	
-	@Test
-	public void testAddFKifFieldHasPKyet(){
+	public void testAddFKifFieldHasPKyet() {
 		testField.addConstraint(testPKconstraint);
 		testField.addConstraint(testFKconstraint);
-		assertFalse(testField.containsConstraint(testFKconstraint));
+		assertFalse(testField.isForeignKey());
 	}
-	
+
 	@Test
-	public void testCreateNotNullConstraint(){		
+	public void testCreateNotNullConstraint() {
 		testField.addConstraint(testNotNullConstraint);
-		assertTrue(testField.containsConstraint(testNotNullConstraint));
+		assertTrue(testField.hasNotNullConstraint());
 	}
-	
+
 	@Test
-	public void testContainsNotNullIfPK(){
+	public void testContainsNotNullIfPK() {
 		testField.addConstraint(testPKconstraint);
-		assertTrue(testField.containsConstraint(testNotNullConstraint));
+		assertTrue(testField.hasNotNullConstraint());
 	}
-	
+
 	@Test
-	public void testContainsNotNullIfFK(){
+	public void testContainsNotNullIfFK() {
 		testField.addConstraint(testFKconstraint);
-		assertTrue(testField.containsConstraint(testNotNullConstraint));
+		assertTrue(testField.hasNotNullConstraint());
 	}
-	
+
 	@Test
-	public void testCreateCheckConstraint(){
+	public void testCreateCheckConstraint() {
 		Constraint testCheckConstraint = new CheckConstraint();
 		testField.addConstraint(testCheckConstraint);
-		assertTrue(testField.containsConstraint(testCheckConstraint));
+		assertTrue(testField.hasCheckConstraint());
 	}
-	
+
 	@Test
-	public void testCreateUniqueConstraint(){		
+	public void testCreateUniqueConstraint() {
 		testField.addConstraint(testUniqueConstraint);
-		assertTrue(testField.containsConstraint(testUniqueConstraint));
+		assertTrue(testField.hasUniqueConstraint());
 	}
-	
+
 	@Test
-	public void testContatinsUniqueConstraintIfPK(){
+	public void testContatinsUniqueConstraintIfPK() {
 		testField.addConstraint(testPKconstraint);
-		assertTrue(testField.containsConstraint(testUniqueConstraint));		
+		assertTrue(testField.hasUniqueConstraint());
 	}
-	
+
 	@Test
-	public void testRemoveNotNullConstraint(){
+	public void testRemoveNotNullConstraint() {
 		testField.addConstraint(testNotNullConstraint);
-		assertTrue(testField.containsConstraint(testNotNullConstraint));
+		assertTrue(testField.hasNotNullConstraint());
 		Constraint removingConstraint = new NotNullConstraint();
 		testField.removeConstraint(removingConstraint);
-		assertFalse(testField.containsConstraint(testNotNullConstraint));
-	}		
-	
+		assertFalse(testField.hasNotNullConstraint());
+	}
+
+	@Test
+	public void testRemoveNotNullConstraintIfPK() {
+		testField.addConstraint(testPKconstraint);
+		assertTrue(testField.hasNotNullConstraint());
+		testField.removeConstraint(testNotNullConstraint);
+		assertTrue(testField.hasNotNullConstraint());
+	}
+
 }

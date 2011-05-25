@@ -1,6 +1,5 @@
 package ru.voronoy.objectmodel.main;
 
-public class ForeignKeyConstraint extends KeyConstraint{
+public class ForeignKeyConstraint extends KeyConstraint {
 
-	
 }
