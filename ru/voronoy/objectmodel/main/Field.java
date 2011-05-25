@@ -15,10 +15,15 @@ public class Field extends DataBaseObject {
 	public void addConstraint(Constraint constraint) {
 		if (this.constraints.isEmpty()){
 			this.constraints.add(constraint);			
-		}			
-		if (constraint instanceof KeyConstraint){
-			this.constraints.add(new NotNullConstraint());
+		}					
+		if (constraint instanceof PrimaryKeyConstraint){
+			this.constraints.add(new UniqueConstraint());
 		}
+	}
+	
+	public void addConstraint(KeyConstraint constraint){
+		this.addConstraint((Constraint)constraint);		
+		this.constraints.add(new NotNullConstraint());
 	}
 
 	public boolean containsConstraint(Constraint constraint) {
@@ -28,6 +33,15 @@ public class Field extends DataBaseObject {
 			}
 		}
 		return false;
+	}
+
+	public void removeConstraint(Constraint removingConstraint) {		
+		for (Constraint c : this.constraints){
+			if (c.getClass().isInstance(removingConstraint)){
+				this.constraints.remove(c);
+				return;
+			}
+		}
 	}
 		
 }
