@@ -146,5 +146,37 @@ public class ObjectModelTest {
 		testField.removeConstraint(testNotNullConstraint);
 		assertTrue(testField.hasNotNullConstraint());
 	}
+	
+	@Test
+	public void testRemoveNotNullConstraintIfFK() {
+		testField.addConstraint(testFKconstraint);
+		assertTrue(testField.hasNotNullConstraint());
+		testField.removeConstraint(testNotNullConstraint);
+		assertTrue(testField.hasNotNullConstraint());
+	}
+	
+	@Test
+	public void testRemovePKconstraint(){
+		testField.addConstraint(testPKconstraint);
+		assertTrue(testField.isPrimaryKey());
+		testField.removeConstraint(new PrimaryKeyConstraint());
+		assertFalse(testField.isPrimaryKey());
+	}
+	
+	@Test
+	public void testRemoveFKconstraint(){
+		testField.addConstraint(testFKconstraint);
+		assertTrue(testField.isForeignKey());
+		testField.removeConstraint(new ForeignKeyConstraint());
+		assertFalse(testField.isForeignKey());
+	}
+	
+	@Test
+	public void testRemoveConstraintIfDontHas(){
+		assertFalse(testField.isPrimaryKey());
+		testField.removeConstraint(new PrimaryKeyConstraint());
+		assertFalse(testField.isPrimaryKey());
+		
+	}
 
 }

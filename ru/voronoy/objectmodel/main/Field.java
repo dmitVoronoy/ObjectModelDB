@@ -34,15 +34,27 @@ public class Field extends DataBaseObject {
 		return false;
 	}
 
-	public void removeConstraint(Constraint removingConstraint) {
+	
+	public void removeConstraint(Constraint constraint) {
+		if (this.isPrimaryKey() || this.isForeignKey()) {
+			return;
+		}
 		for (Constraint c : this.constraints) {
-			if (c.getClass().isInstance(removingConstraint)) {
-				if (this.containsConstraint(new PrimaryKeyConstraint())) {
-					return;
-				}
+			if (c.getClass().isInstance(constraint)) {				
 				this.constraints.remove(c);
 				return;
 			}
+		}
+	}
+	
+	public void removeConstraint(KeyConstraint constraint) {
+		if (this.isPrimaryKey() || this.isForeignKey()) {
+			for (Constraint c : this.constraints) {
+				if (c.getClass().isInstance(constraint)) {				
+					this.constraints.remove(c);
+					return;
+				}
+			}			
 		}
 	}
 	
